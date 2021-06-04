@@ -1,0 +1,17 @@
+#ATM
+#리스트의 누적합
+def atm(li):
+  sum = 0
+  for i in range(0,len(li)):
+    add = 0
+    j = 0
+    while j <= i:
+      add += li[j]
+      j += 1
+    sum += add
+  print(sum)
+
+n = int(input())
+li = list(map(int,input().split()))
+li.sort()#리스트 정렬
+atm(li)
