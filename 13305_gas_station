@@ -1,0 +1,27 @@
+def cost(km, won):
+  #초기화
+  sum = 0
+  mini = won[0]
+  point = 0#거리지점
+  money = 0
+  for i in range(0,len(won)-1):
+    if mini > won[i+1] or i == len(won)-2:#더 적은 비용의 주유소 도달 or 마지막 지점
+      money += mini * add(point,i,km)
+      #가장 적은 비용 * 거리수 합(여기서 미리 충전 해놓으면 비용을 아낄 수 있음)
+      mini = won[i+1]#최소 비용 갱신
+      point = i + 1#그 다음부터 
+     
+  print(money)
+
+#point~i까지의 거리 합
+def add(point,i,km):
+  sum = 0
+  for j in range(point, i+1):
+    sum += km[j]
+  return sum
+
+#입력
+t = int(input())
+km = list(map(int,input().split()))
+won = list(map(int,input().split()))
+cost(km, won)
