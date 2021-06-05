@@ -1,0 +1,20 @@
+#회의실
+def conf(li):
+  li = sorted(li, key = lambda x:(x[1],x[0]))#회의가 끝나는 순으로 정렬
+  count = 0
+  end = 0
+   
+  for i,j in li:
+    if i >= end:#이전 회의 종료시각 <= 다음 회의 시작시간
+      count += 1
+      end = j
+  
+  print(count)
+
+#입력
+t = int(input())
+li = []
+for i in range(0,t):
+  n,m = map(int,input().split())
+  li.append([n,m])
+conf(li)
