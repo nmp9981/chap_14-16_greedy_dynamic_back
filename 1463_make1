@@ -1,0 +1,20 @@
+def make(n):
+  dp_list = [0,0,1,1]#경우의 수
+
+  for i in range(4, n+1):
+    #먼저 1을 뺏을 경우 나오는 경우의 수 저장
+    dp_list.append(dp_list[i-1] + 1)
+
+    #2로 나눠질 경우 기존 1을 뺏을 경우와 비교해 경우의 수 저장
+    if i % 2 == 0:
+      dp_list[i] = min(dp_list[i], dp_list[i//2] + 1)
+    
+    #6의 배수일 수도 있어 if로 따로저장 
+    #3로 나눠질 경우 기존 1을 뺏을 경우와 비교해 경우의 수 저장
+    if i % 3 == 0:
+      dp_list[i] = min(dp_list[i], dp_list[i//3] + 1)
+
+  print(dp_list[n])
+#입력
+n = int(input())
+make(n)
