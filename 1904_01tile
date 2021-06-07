@@ -1,0 +1,13 @@
+#01타일
+#입력
+n = int(input())
+
+#n번째 피보나치수
+pibo = [0]*1000001
+pibo[1] = 1
+pibo[2] = 2
+for i in range(3,n+1):
+  pibo[i] = (pibo[i-1] + pibo[i-2])%15746
+
+#출력
+print(pibo[n] % 15746)
