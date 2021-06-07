@@ -1,0 +1,20 @@
+#파도반수열
+def wave(n):
+  #리스트 생성
+  li = [0,1,1,1,2,2,3,4]
+  for i in range(8,101):
+    li.append(0)
+  
+  #n번째 파도반 수
+  if n <= 7:
+    print(li[n])
+  else:
+    for i in range(8,n+1):
+      li[i] = li[i-2] + li[i-3]
+    print(li[n])
+
+#입력
+t = int(input())
+for i in range(0,t):
+  n = int(input())
+  wave(n)
