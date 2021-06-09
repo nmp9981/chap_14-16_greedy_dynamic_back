@@ -1,0 +1,19 @@
+#포도주 시식
+def wine(grape,n):
+  liq = [0]*(10001)#누적양
+  #초기값에 대한 예외처리
+  liq[0] = grape[0]
+  liq[1] = grape[0] + grape[1]
+  liq[2] = max(grape[0]+grape[1], grape[0]+grape[2], grape[1]+grape[2])
+  #점화식
+  for i in range(3,n):#포도주를 마지막에 마시는 경우와 마시지 않는 경우를 나눠서 진행
+    liq[i] = max(liq[i-1], grape[i]+liq[i-2], grape[i]+grape[i-1]+liq[i-3])
+  print(liq[n-1])
+
+#입력
+n = int(input())
+grape = [0]*(10001)
+for i in range(0,n):
+  k = int(input())
+  grape[i] = k
+wine(grape,n)
