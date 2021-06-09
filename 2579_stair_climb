@@ -1,0 +1,18 @@
+#계단오르기
+def stair(li):
+  point = [0]*301
+  point[0] = li[0]
+  point[1] = li[0] + li[1]
+  point[2] = max(li[2]+li[1], li[2]+li[0])
+  for i in range(3,n):#마지막 계단은 반드시 밟아야함
+    point[i] = max(li[i-1]+point[i-3]+li[i] , point[i-2]+li[i])#전계단과 전전계단
+  print(point[n-1])
+
+#입력
+n = int(input())
+li = [0]*301
+for i in range(0,n):
+  s = int(input())
+  li[i] = s
+
+stair(li)
