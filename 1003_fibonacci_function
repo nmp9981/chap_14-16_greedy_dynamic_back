@@ -1,0 +1,20 @@
+#피보나치 수열
+def fibo(n):
+  #리스트 생성
+  fibo0 = [1,0,1]
+  fibo1 = [0,1,1]
+
+  for i in range(3,n+1):
+    fibo0_n = fibo0[i-1] + fibo0[i-2]
+    fibo0.append(fibo0_n)
+    fibo1_n = fibo1[i-1] + fibo1[i-2]
+    fibo1.append(fibo1_n)
+  #0,1개수
+  print(fibo0[n],fibo1[n])
+
+#입력
+t = int(input())
+for i in range(0,t):
+  n = int(input())
+  fibo(n)
+  
