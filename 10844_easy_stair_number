@@ -1,0 +1,26 @@
+#계단수
+def stair(p,n):
+  #초기값
+  for i in range(0,10):
+    if i == 0:
+      p[0][i] = 0
+    else:
+      p[0][i] = 1
+  
+  #각 자리수마다 끝자리가 j일때의 경우의 수
+  for i in range(1,n):
+    for j in range(0,10):
+      if j == 0:
+        p[i][j] = p[i-1][j+1]
+      elif j == 9:
+        p[i][j] = p[i-1][j-1]
+      else:
+        p[i][j] = p[i-1][j-1] + p[i-1][j+1]
+  print(sum(p[n-1])%1000000000)
+#입력
+n = int(input())
+p = []
+for i in range(0,n):
+  num = [0]*10
+  p.append(num)
+stair(p,n)
