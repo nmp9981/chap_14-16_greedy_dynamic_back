@@ -1,0 +1,13 @@
+#LIS - DP
+def lis(li,n):
+  dp = [1 for i in range(n)]#일단 기본적으로 길이 1
+  for i in range(0,n):#현재 위치
+    for j in range(0,i):#이전 위치
+      if li[i] > li[j]:
+        dp[i] = max(dp[i], dp[j]+1)#현재 위치 이전 숫자중 dp최대값, 이전에서 수를 1 늘림
+  print(max(dp))
+
+#입력
+n = int(input())#수열의 크기
+li = list(map(int,input().split()))
+lis(li,n)
