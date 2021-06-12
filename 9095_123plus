@@ -1,0 +1,17 @@
+#123더하기
+def plus123(n,li):
+  #초기항 설정
+  li[1] = 1
+  li[2] = 2
+  li[3] = 4
+  #점화식
+  for i in range(4,n+1):
+    li[i] = li[i-1] + li[i-2] + li[i-3]
+  print(li[n])
+
+#입력
+t = int(input())
+li = [0]*11
+for i in range(0,t):
+  n = int(input())
+  plus123(n,li)
