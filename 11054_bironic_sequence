@@ -1,0 +1,24 @@
+#바이토닉 수열
+def bito(li,n):
+  #감소용 리스트
+  re = li[::-1]
+  #초기값(모든 항의 최소길이 1)
+  p = [1 for i in range(n)]#증가용
+  m = [1 for i in range(n)]#감소용
+  for i in range(0,n):#현재 탐색 위치
+    for j in range(0,i):
+      if li[i] > li[j]:
+        p[i] = max(p[i], p[j]+1)
+      if re[i] > re[j]:
+        m[i] = max(m[i], m[j]+1)
+  
+  #출력
+  b = [1 for i in range(n)]
+  for i in range(0,n):
+    b[i] = p[i] + m[n-i-1] - 1#자기 자신 제외
+  print(max(b))
+
+#입력
+n = int(input())
+li = list(map(int,input().split()))
+bito(li,n)
