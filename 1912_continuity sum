@@ -1,0 +1,12 @@
+#continuity sum 연속합
+def add(li,n):
+  p = [0]*n
+  p[0] = li[0]
+  for i in range(1,n):
+    p[i] = max(p[i-1] + li[i], li[i])
+  print(max(p))
+
+#입력
+n = int(input())
+li = list(map(int,input().split()))
+add(li,n)
