@@ -1,0 +1,11 @@
+def n2(n):
+  li = [0]*1001
+  li[1] = 1
+  li[2] = 2
+  for i in range(3,n+1):#마지막에 1개 놓는가 2개 놓는가?
+    li[i] = (li[i-1] + li[i-2])%10007
+  #출력
+  print(li[n])
+#입력
+n = int(input())
+n2(n)
