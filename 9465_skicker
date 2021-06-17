@@ -1,0 +1,20 @@
+#스티커 수
+def sticker(li,n):
+  p = li #누적합
+  #초기값
+  p[0][1] = li[0][1] + li[1][0]
+  p[1][1] = li[0][0] + li[1][1]
+  for i in range(2,n):#점화식(대각선을 더할건가(i-2 열)? or 같은층을 더할건가?)
+    p[0][i] += max(p[1][i-2], p[1][i-1])
+    p[1][i] += max(p[0][i-2], p[0][i-1])
+  print(max(p[0][n-1], p[1][n-1]))
+
+#입력
+t = int(input())
+for i in range(t):
+  n = int(input())
+  li = []
+  for j in range(2):
+    a = list(map(int, input().split()))
+    li.append(a)
+  sticker(li,n)
