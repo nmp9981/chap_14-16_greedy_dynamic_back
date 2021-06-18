@@ -1,0 +1,14 @@
+#타일채우기
+def tile(n):
+  p = [0 for i in range(31)]#n<=30
+  p[2] = 3
+  p[0] = 1
+  for i in range(4,n+1,2):#홀수일 경우 모두 덮기가 불가능
+    p[i] = 3*p[i-2] 
+    for j in range(4,i+1,2):#겹치는 부분고려
+      p[i] += 2*p[i-j]
+  #출력
+  print(p[n])
+#입력
+n = int(input())
+tile(n)
