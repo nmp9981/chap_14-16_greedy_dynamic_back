@@ -1,0 +1,13 @@
+#제곱수의 합 
+def sq(n):
+  p = [i for i in range(n+1)] #모든수는 1의 제곱수로 구해짐
+  for i in range(1,n+1): #1부터 차례대로 돌림
+    for j in range(1,i): #제곱수 판별
+      if j**2 > i: #해당 숫자보다 제곱수가 크면 종료
+        break
+      if p[i] > p[i-j**2]+1: #제곱수를 만나면
+        p[i] = p[i-j**2] + 1 #해당 제곱수만큼 초기화를 시키고 1더함(새로운 제곱수는 더해야하기 때문)
+  print(p[n])
+#입력
+n = int(input())
+sq(n)
