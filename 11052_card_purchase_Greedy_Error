@@ -1,0 +1,36 @@
+#카드 구매하기
+#지불 비용
+def pay(n,li):
+
+  #개당 비용
+  p = dict()#사전 생성
+  for i in range(1,n+1):
+    p[i] = li[i-1] / i
+  
+  #최대 비용
+  fee = 0
+  cost = 0
+  count = 0
+  maxi = 0
+  k = 0
+  while count < n:#n개를 구매할때 까지
+    for i in range(1,n-count+1):
+      if p[i] > maxi:#개당비용이 이전 최대 개당비용보다 크다면?
+        fee = p[i]*i#총 가격
+        maxi = p[i]#최대 개당비용 저장
+        k = i#인덱스(개수) 갱신
+    
+    #누적
+    count += k #구매 개수
+    cost += fee #통 비용
+    #초기화
+    fee = 0 #총가격 초기화
+    k = 0 #인덱스 초기화
+    maxi = 0 #최대 개당비용 초기화
+    
+  #출력
+  print(int(cost))
+#입력
+n = int(input())
+li = list(map(int, input().split()))
+pay(n,li)
