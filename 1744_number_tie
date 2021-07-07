@@ -1,0 +1,44 @@
+#입력
+n = int(input())
+li = []
+for i in range(n):
+  k = int(input())
+  li.append(k)
+
+#정렬
+li.sort()
+
+plus = []
+one = []
+minus = []
+#-0+구분
+for i in li:
+  if i > 1:
+    plus.append(i)
+  elif i == 1: #1은 그냥 더하는게 이득
+    one.append(i)
+  else:
+    minus.append(i)
+
+#식계산(+)
+sum_plus = 0
+if len(plus) % 2 == 0:
+  for i in range(len(plus)-1,-1,-2):
+    sum_plus += plus[i] * plus[i-1]
+else:
+  for i in range(len(plus)-1,0,-2):
+    sum_plus += plus[i] * plus[i-1]
+  sum_plus += plus[0] #+는 마지막에 그냥 더하는것이 이득
+
+#식계산(-)
+sum_minus = 0
+if len(minus) % 2 == 0:
+  for i in range(0,len(minus),2):
+    sum_minus += minus[i] * minus[i+1]
+else:
+  for i in range(0,len(minus)-1,2):
+    sum_minus += minus[i] * minus[i+1]
+  sum_minus += minus[-1] #음수가 1개 남으면 그냥 더함
+
+#결과출력
+print(sum_plus + sum_minus + len(one))
