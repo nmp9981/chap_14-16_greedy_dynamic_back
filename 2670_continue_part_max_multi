@@ -1,0 +1,14 @@
+#입력
+t = int(input())
+li = []
+for i in range(t):
+	x = float(input())
+	li.append(x)
+p = [0]*10001
+
+#점화식
+p[0] = li[0]
+for i in range(t):
+	p[i] = max(li[i], p[i-1]*li[i])
+#최대값출력
+print(format(max(p),".3f"))
