@@ -1,0 +1,30 @@
+#입력
+t,w = map(int, input().split())
+li = [0]
+for i in range(1,t+1):
+	x = int(input())
+	li.append(x)
+dp = [[0]*(w+1) for i in range(t+1)]
+
+#점화식
+for i in range(1,t+1):
+	#한번도 이동을 안할 경우
+	if li[i] == 1:
+		dp[i][0] = dp[i-1][0] + 1
+	for j in range(1,w+1):
+		#먹는 경우
+		#자두가 1번위치에서 떨어짐
+		if  li[i] == 1 and j % 2 == 0:
+			#움직여서 받아먹을 것인가?
+			dp[i][j] = max(dp[i-1][j] + 1, dp[i-1][j-1] +1)
+		
+		#자두가 2번위치에 떨어질 경우
+		elif li[i] == 2 and j % 2 == 1:
+			dp[i][j] = max(dp[i-1][j], dp[i-1][j-1]) + 1
+			
+		#안먹을 경우
+		else: #움직일건가?
+			dp[i][j] = max(dp[i-1][j], dp[i-1][j-1])
+
+#결과(이동을 안하는게 더 이득일 수 있음)
+print(max(dp[t]))
