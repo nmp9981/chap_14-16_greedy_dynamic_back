@@ -1,0 +1,17 @@
+#2d배열(dp[n][0] = 1)
+dp = [[1,0,0]for i in range(10001)]
+#초기값
+dp[2][1] = 1
+dp[3][1] = 1
+dp[3][2] = 1
+#점화식(순서가 의미없으므로 내림차순 형식으로 해결)
+for i in range(4,10001):
+	dp[i][1] = dp[i-2][1] + 1 #끝자리가 2
+	dp[i][2] = dp[i-3][2] + dp[i-3][1] + 1 #끝자리가 3 
+	
+#입력
+t = int(input())
+for i in range(t):
+	n = int(input())
+	result = sum(dp[n]) 
+	print(result)
