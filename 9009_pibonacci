@@ -1,0 +1,31 @@
+#피보나치수
+def pibo():
+	p = [1] * 43 #입력값이 10억 이하
+	p[1] = 2
+	for i in range(2,len(p)):
+		p[i] = p[i-1] + p[i-2]
+	return p
+
+#정수를 피보나치수로 분해
+def pibo_add(n):
+	pb = []
+	i = 42
+	while n > 0:
+		if n >= p[i]:
+			n -= p[i]
+			pb.append(p[i])
+		else:
+			i -= 1
+	
+	#출력
+	pb = pb[::-1]
+	for i in pb:
+		print(i,end=' ')
+	print()
+	  
+#입력
+t = int(input())
+p = pibo()
+for i in range(t):
+	n = int(input())
+	pibo_add(n)
