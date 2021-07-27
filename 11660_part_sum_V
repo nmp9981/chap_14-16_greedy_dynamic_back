@@ -1,0 +1,39 @@
+import sys
+#누적합
+def part_sum(li,n):
+	m = [[0]*(n+1) for i in range(n+1)]
+	p = [[0]*(n+1) for i in range(n+1)]
+	
+	#중간결과
+	for i in range(1,n+1):
+		for j in range(1,n+1):
+			if j == 1:
+				m[i][j] = li[i][j]
+			else: 
+				m[i][j] = m[i][j-1] + li[i][j]
+	
+	#최종결과
+	for i in range(1,n+1):
+		for j in range(1,n+1):
+			if i == 1:
+				p[i][j] = m[i][j]
+			else:
+				p[i][j] = p[i-1][j] + m[i][j]
+				
+	return p
+	
+#입력
+n,m = map(int, input().split())
+li = []
+for i in range(n+1):
+	if i == 0:
+		mat = [0]*(n+1)
+	else:
+		mat = [0] + list(map(int, sys.stdin.readline().split()))
+	li.append(mat)
+p = part_sum(li,n)
+
+#출력
+for i in range(m):
+	x1,y1,x2,y2 = map(int, sys.stdin.readline().split())
+	print(p[x2][y2] - p[x1-1][y2] - p[x2][y1-1] + p[x1-1][y1-1]) #부분합
