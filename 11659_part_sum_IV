@@ -1,0 +1,18 @@
+import sys
+#누적합
+def part_sum(li,n):
+	p = [0]*(n+1)
+	p[1] = li[1]
+	for i in range(2,n+1):
+		p[i] = p[i-1] + li[i]
+	return p
+	
+#입력
+n,m = map(int, input().split())
+li = [0] + list(map(int, sys.stdin.readline().split()))
+p = part_sum(li,n)
+
+#출력
+for i in range(m):
+	a,b = map(int, sys.stdin.readline().split())
+	print(p[b] - p[a-1]) #부분합 
