@@ -1,0 +1,32 @@
+#백트래킹
+def backt(depth,n,m):
+	if depth == m:
+		w = []
+		for i in s:
+			w.append(li[i])
+		ans.append(w)
+		return
+	
+	for i in range(0,n):
+		if i not in s:
+			s.append(i)
+			backt(depth+1,n,m)
+			s.pop()
+#입력
+n,m = map(int, input().split())
+s = []
+li = list(map(int, input().split()))
+li.sort()
+ans = []
+backt(0,n,m)
+
+#출력
+ans.sort()
+for j in ans[0]:
+	print(j,end=" ")
+print()
+for i in range(1,len(ans)):
+	if ans[i] != ans[i-1]:
+		for j in ans[i]:
+			print(j,end=" ")
+		print()
