@@ -1,0 +1,21 @@
+#입력
+n,k = map(int, input().split())
+bag = [[0,0]]
+for i in range(n):
+  w,v = map(int, input().split())
+  bag.append([w,v])
+
+#냅색문제
+dp = [[0]*(k+1) for i in range(n+1)]
+for i in range(1,n+1):
+  for j in range(1,k+1):
+    weight = bag[i][0]
+    value = bag[i][1]
+
+    if j < weight:
+      dp[i][j] = dp[i-1][j] #이전값을 그대로 가져옴
+    else:
+      dp[i][j] = max(dp[i-1][j], value + dp[i-1][j-weight])
+
+#출력
+print(dp[n][k])
