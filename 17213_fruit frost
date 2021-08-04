@@ -1,0 +1,20 @@
+#중복 조합
+def nhr(x,y):
+  a = x+y-1
+  b = y
+  #aCb
+  p = [[0]*(a+1) for i in range(a+1)]
+  p[1][0] = 1
+  p[1][1] = 1
+  for i in range(2,a+1):
+    for j in range(b+1):
+      p[i][j] = p[i-1][j] + p[i-1][j-1]
+  
+  #출력
+  print(p[a][b])
+
+#입력
+n = int(input())
+m = int(input())
+#경우의 수
+nhr(n,m-n)
