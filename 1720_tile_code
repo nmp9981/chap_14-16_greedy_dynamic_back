@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <algorithm>
+using namespace std;//이름공간 선언
+
+int main() {
+  int size = 31;
+  //중복 허용
+  int p[size];
+  p[1] = 1;
+  p[2] = 3;
+  for(int i = 3;i < size;i++){
+    p[i] = p[i-1] + 2*p[i-2];
+  }
+
+  //중복 금지
+  //경우의 수 = (전체(중복+중복+중복x)+중복x)/2
+  int f[size];
+  f[1] = 1;
+  f[2] = 3;
+  f[3] = 3;
+  for(int i = 4;i < size;i++){
+    if(i % 2==0){
+      f[i] = (p[i]+p[i/2]+2*p[(i-2)/2])/2;
+    }else{
+      f[i] = (p[i/2]+p[i])/2;
+    }
+  }
+
+  //입력
+  int t;
+  cin>>t;
+  cout<<f[t]<<endl;
+  return 0;
+}
