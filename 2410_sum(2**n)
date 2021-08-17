@@ -1,0 +1,30 @@
+#입력
+n = int(input())
+
+#점화식
+dp = [[0]*20 for i in range(1000001)]
+limit = 2
+mod = 10**9
+dp[0][0] = 1
+dp[1][0] = 1
+for i in range(2,1000001,2):
+  #2**limit까지 계산
+  if i >= (2**limit):
+    limit += 1
+
+  for j in range(limit):
+    if j == 0:
+      dp[i][j] = 1
+    elif j == 1:
+      dp[i][j] = i//2
+    else:
+      #마지막이 2**j가 올 경우 p[i-2**j]열의 k번째까지 합을 구함
+      for k in range(j+1):
+        dp[i][j] += dp[i-2**j][k]
+      dp[i][j] = (dp[i][j])%mod
+
+#n이 홀수, 짝수일때 결과가 동일
+if n%2==1:
+  n -= 1   
+#출력
+print(sum(dp[n])%mod)
