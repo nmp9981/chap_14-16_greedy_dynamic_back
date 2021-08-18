@@ -1,0 +1,15 @@
+#입력
+n,k = map(int, input().split())
+worth = []
+for i in range(n):
+  w = int(input())
+  worth.append(w)
+
+#1d dp
+p = [0]*(k+1)
+p[0] = 1
+for i in worth:
+  for j in range(1,k+1):
+    if i <= j:
+      p[j] += p[j-i]
+print(p[k])
