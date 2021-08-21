@@ -1,0 +1,55 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>//리스트 연산
+using namespace std;//이름공간 선언
+
+int main() {
+  
+  //입력
+  int n;
+  int mod = 123456789;
+  cin>>n;
+  int pri[40001];
+
+  //초기화
+  for(int i=3;i<=n;i++){
+    pri[i] = 0;
+  }
+  //n까지 소수판정
+  for(int i=3;i<=n;i+=2){
+    if(pri[i]==0){
+      for(int j=i*i;j<=n;j+=i){
+        pri[j] = 1;//이제 소수가 아님
+      }
+    }
+  }
+  //소수리스트
+  vector<int> p;//vector로 정의해야 push연산 가능
+  p.push_back(2);
+  for(int i=3;i<=n;i+=2){
+    if(pri[i]==0){
+      p.push_back(i);//append연산
+    }
+  }
+  
+  //점화식
+  int dp[40001];
+
+  //초기화
+  for(int i=0;i<=40000;i++){
+    dp[i] = 0;
+  }
+  dp[0] = 1;
+  int len_p = p.size();
+  for(int j=0;j<len_p;j++){
+    for(int i=p[j];i<=n;i++){
+      dp[i] = (dp[i] + dp[i-p[j]])%mod;
+      dp[i] = dp[i]%mod;
+    }
+  }
+  cout<<dp[n]%mod<<endl;
+  return 0;
+}
