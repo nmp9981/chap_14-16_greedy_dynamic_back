@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  //입력
+  int n,m;
+  cin>>n>>m;
+  int li[n][m];
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      cin>>li[i][j];
+    }
+  }
+
+  //점화식
+  //초기화
+  int p[n][m];
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      p[i][j] = 0;
+    }
+  }
+  //점화식
+  for(int i=0;i<m;i++){
+    p[0][i] = p[0][i-1] + li[0][i];
+  }
+  for(int i=1;i<n;i++){
+    for(int j=0;j<m;j++){
+      if(j==0){
+        p[i][j] = p[i-1][j]+li[i][j];
+      }else{
+        p[i][j] = li[i][j] + max({p[i-1][j-1],p[i][j-1],p[i-1][j]});
+      }
+    }
+  }
+  //출력
+  cout<<p[n-1][m-1]<<endl;
+  return 0;
+}
