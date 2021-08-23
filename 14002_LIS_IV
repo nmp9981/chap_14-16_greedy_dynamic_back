@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  //입력
+  int n;
+  cin>>n;
+  int li[n];
+  for(int i=0;i<n;i++){
+    cin>>li[i];
+  }
+
+  //초기화
+  int p[n];
+  int ind[n];
+  p[0] = 1;
+  for(int i=0;i<n;i++){
+    p[i] = 1;
+    ind[i] = -1;
+  }
+  //점화식
+  for(int i=1;i<n;i++){
+    for(int j=0;j<i;j++){
+      if(li[i]>li[j]){
+        p[i] = max(p[j]+1,p[i]);
+      }
+    }
+  }
+  
+  //출력
+  int maxi = 0;
+  int index = 0;
+  vector<int> result;
+  //LIS길이
+  for(int i=0;i<n;i++){
+    if(maxi<p[i]){
+      maxi = p[i];//최대길이
+    }
+  }
+  cout<<maxi<<endl;
+  //LIS원소,stack,역추적 이용
+  vector<int> s;
+  index = maxi;
+  for(int i=n-1;i>-1;i--){
+    if(index == p[i]){
+      s.push_back(li[i]);
+      index -= 1;
+    }
+  }
+  for(int i=s.size()-1;i>-1;i--){
+    cout<<s[i]<<" ";
+  }
+  return 0;
+}
