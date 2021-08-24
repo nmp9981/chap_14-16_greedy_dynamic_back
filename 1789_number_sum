@@ -1,0 +1,30 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  //입력
+  long long s;
+  cin>>s;
+  long long sum = 0;
+
+  //sum(1~n까지 더할때가 가장 많은 자연수를 더할 수 있음)
+  int maxi = 93000;
+  for(long long i=1;i<maxi;i++){
+    sum += i;
+    if(sum>s){
+      cout<<i-1<<endl;
+      break;
+    }
+  }
+  
+  return 0;
+}
