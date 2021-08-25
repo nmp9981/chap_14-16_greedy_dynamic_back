@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  //입력
+  int n;
+  cin>>n;
+  vector<int> li;
+  for(int i=0;i<n;i++){
+    int weight;
+    cin>>weight;
+    li.push_back(weight);
+  }
+  
+  //정렬
+  sort(li.begin(),li.end());
+  //로프
+  int maxi = 0;
+  for(int i=n-1;i>=0;i--){
+    if(maxi<li[i]*(n-i)){
+      maxi = li[i]*(n-i);
+    }
+  }
+  //출력
+  cout<<maxi<<endl;
+  return 0;
+}
