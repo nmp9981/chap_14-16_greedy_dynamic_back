@@ -1,0 +1,68 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+//역정렬
+bool compare(int i,int j){
+  return j<i;
+}
+
+int main() {
+  ios_base::sync_with_stdio(0);
+  cin.tie(0); //실행속도 향상
+  
+  //입력
+  int t;
+  cin>>t;
+  for(int i=0;i<t;i++){
+    int n;
+    cin>>n;
+
+    //리스트
+    vector<int> p;
+    vector<int> q;
+    vector<int> li;
+    for(int j=0;j<n;j++){
+      int x;
+      cin>>x;
+      li.push_back(x);
+    }
+
+    //정렬
+    sort(li.begin(),li.end());
+
+    //종모양으로 나누기
+    for(int j=0;j<n;j++){
+      if(j%2==0){
+        p.push_back(li[j]);
+      }else{
+        q.push_back(li[j]);
+      }
+    }
+    sort(q.begin(),q.end(),compare);//역정렬
+
+    //최적(종 모양)
+    int maxi = abs(p[p.size()-1] - q[0]);
+    for(int j=1;j<p.size();j++){
+      if(maxi<abs(p[j]-p[j-1])){
+        maxi = abs(p[j]-p[j-1]);
+      }
+    }
+    for(int j=1;j<q.size();j++){
+      if(maxi<abs(q[j]-q[j-1])){
+        maxi = abs(q[j]-q[j-1]);
+      }
+    }
+    //출력
+    cout<<maxi<<endl;
+  }
+  return 0;
+}
