@@ -1,0 +1,36 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  ios_base::sync_with_stdio(0);
+  cin.tie(0); //실행속도 향상
+  
+  //입력
+  int n;
+  int max = 1000000;
+  cin>>n;
+  //리스트 생성
+  int p[100001];
+  p[0] = 0;
+  p[1] = max;
+  p[2] = 1;
+  p[3] = max;
+  p[4] = 2;
+  for(int i=5;i<=n;i++){
+    p[i] = 1 + min(p[i-2],p[i-5]);
+  }
+  if(n==1 || n==3){
+    cout<<-1<<endl;
+    return 0;
+  }
+  cout<<p[n]<<endl;
+}
