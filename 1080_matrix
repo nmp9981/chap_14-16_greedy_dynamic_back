@@ -1,0 +1,66 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int a[50][50];
+int b[50][50];
+
+//3*3뒤집기(a 배열)
+void reverse(int y, int x){
+  for(int i = y;i<=y+2;i++){
+    for(int j = x;j<=x+2;j++){
+      a[i][j] = 1 - a[i][j];
+    }
+  }
+}
+int main() {
+  cin.tie(0); //실행속도 향상
+  
+  //입력
+  int n,m;
+  cin>>n>>m;
+  //리스트 입력(붙여서 입력받기)
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      scanf("%1d",&a[i][j]);
+    }
+  }
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      scanf("%1d",&b[i][j]);
+    }
+  }
+
+  //목표는 모두 0으로
+  //3*3기준으로 뒤집음
+  int count = 0;
+  for(int i=0;i<n-2;i++){
+    for(int j=0;j<m-2;j++){
+      if(a[i][j] != b[i][j]){
+        count += 1;
+        reverse(i,j);
+      }
+    }
+  }
+
+  //뒤집은 뒤, 배열을 순회하면서 불일치가 있는지 확인
+  for(int i=0;i<n;i++){
+    for(int j=0;j<m;j++){
+      if(a[i][j] != b[i][j]){
+        cout<<-1<<endl;
+        return 0;
+      }
+    }
+  }
+  //결과
+  cout<<count<<endl;
+  return 0;
+}
