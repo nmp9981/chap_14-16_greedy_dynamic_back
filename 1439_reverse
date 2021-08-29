@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  //입력
+  string str;
+  cin>>str;
+  int t;
+  t = str.size();
+  int s[t];
+  for(int i=0;i<t;i++){
+    s[i] = (int)str[i] -48;
+  }
+  
+  //뒤집기
+  int count0 = 0;
+  int count1 = 0;
+  for(int i=1;i<t;i++){
+    if(s[i]==1 && s[i-1] == 0){
+      count0 += 1;
+    }
+    if(s[i]==0 && s[i-1] == 1){
+      count1 += 1;
+    }
+  }
+  if(s[t-1] == 0){
+    count0 += 1;
+  }else{
+    count1 += 1;
+  }
+  
+  //출력
+  cout<<min(count0,count1)<<endl;
+  return 0;
+}
