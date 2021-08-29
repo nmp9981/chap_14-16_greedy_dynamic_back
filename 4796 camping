@@ -1,0 +1,32 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  //입력
+  while(true){
+    int l,p,v,count;
+    cin>>l>>p>>v;
+
+    //입력 종료
+    if(l==0 && p==0 && v==0){
+      break;
+    }
+    //캠핑장 사용일수
+    int day;
+    count ++;
+    day = (v/p)*l + min(v%p,l);
+    cout<<"Case "<<count<<": "<<day<<endl;
+  }
+  
+  return 0;
+}
