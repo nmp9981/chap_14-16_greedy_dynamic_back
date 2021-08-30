@@ -1,0 +1,69 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+//내림차순 정렬
+bool compare(int a,int b){
+  return a > b;
+}
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  //입력
+  int n;
+  cin>>n;
+  vector<string> m;
+  for(int i=0;i<n;i++){
+    string x;
+    cin>>x;
+    m.push_back(x);
+  }
+  
+  //알파벳
+  int alpha[26];
+  //초기화
+  for(int j=0;j<26;j++){
+      alpha[j] = 0;
+  }
+  int alphabet[26];
+  for(int i=0;i<n;i++){
+    //초기화
+    for(int j=0;j<26;j++){
+      alphabet[j] = 0;
+    }
+    //자릿수 더하기
+    int digit = 1;
+    for(int j=m[i].size()-1;j>=0;j--){
+      alphabet[(int)m[i][j] - 'A'] += digit;
+      digit *= 10;
+    }
+    //갱신
+    for(int j=0;j<26;j++){
+      
+      alpha[j] += alphabet[j];
+    }
+  }
+  
+  //알파벳 정렬(내림차순)
+  sort(alpha,alpha+26,compare);
+  //자릿수 높은것부터 넣기
+  int result = 0;
+  int mul = 9;
+  for(int j=0;j<26;j++){
+    if(alpha[j] != 0){
+      result += (alpha[j]*mul);
+      mul--;
+    }
+  }
+  //출력
+  cout<<result<<endl;
+  return 0;
+}
