@@ -1,0 +1,39 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  //입력
+  int n;
+  cin>>n;
+  int lv[n];
+  
+  for(int i=0;i<n;i++){
+    cin>>lv[i];
+  }
+  
+  //리스트를 순회하면서 lv[i-1]<=lv[i]이면 lv[i-1]을 lv[i]-1로 감소시킴
+  int count = 0;
+  //맨 끝부터
+  for(int i=n-1;i>0;i--){
+    
+    if(lv[i-1]>=lv[i]){
+      count += lv[i-1]-lv[i]+1;
+      lv[i-1] = lv[i]-1;
+      
+    }
+  }
+
+  //출력
+  cout<<count<<endl;
+  return 0;
+}
