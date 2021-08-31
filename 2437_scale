@@ -1,0 +1,48 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  //입력
+  int n;
+  cin>>n;
+  vector<int> weight;
+  weight.push_back(0);
+  for(int i=0;i<n;i++){
+    int x;
+    cin>>x;
+    weight.push_back(x);
+  }
+  
+  //추 무게 정렬
+  sort(weight.begin(),weight.end());
+  
+  //추 무게 누적합
+  int weight_sum[n];
+  weight_sum[0] = 0;
+  for(int i=1;i<=n;i++){
+    weight_sum[i] = weight_sum[i-1] + weight[i];
+  }
+  
+  //총 누적합까지 모두 잴 수 있는 경우
+  int impossible = weight_sum[n]+1;
+  //누적합+1이 다음 추 무게보다 작으면 누적합 +1 부터 무게재기 불가
+  for(int i=0;i<n;i++){
+    if(weight_sum[i]+1 < weight[i+1]){
+      impossible = weight_sum[i]+1;
+      break;
+    }
+  }
+  //출력
+  cout<<impossible<<endl;
+  return 0;
+}
