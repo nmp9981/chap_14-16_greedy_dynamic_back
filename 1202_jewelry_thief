@@ -1,0 +1,60 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+
+//내림차순
+bool compare(int i, int j){
+  return i>j;
+}
+
+int main() {
+  cin.tie(0); //실행속도 향상
+  //입력
+  int n,k;
+  cin>>n>>k;
+  vector<vector <long long>> ruby(n,vector<long long>(2,0));
+  vector<long long> bag;
+  for(int i=0;i<n;i++){
+    cin>>ruby[i][0]>>ruby[i][1];
+  }
+  for(int i=0;i<k;i++){
+    long long x;
+    cin>>x;
+    bag.push_back(x);
+  }
+
+  //정렬
+  sort(ruby.begin(),ruby.end());
+  sort(bag.begin(),bag.end());
+  
+  //최대힙 이용
+  priority_queue<long long> pq;//최대힙
+  long long result = 0;
+  int index = 0;
+  //무게 제한이 낮은 가방부터 순서대로 보석을 넣음
+  for(int i=0;i<k;i++){
+    //무게를 충족하는 보석을 모두 넣음
+    while(index<n && ruby[index][0]<=bag[i]){
+      pq.push(ruby[index][1]);
+      index ++;
+    }
+
+    //최대힙의 성질 : 루트에 최댓값
+    if(!pq.empty()){
+      result += pq.top();//최댓값을 뽑기
+      pq.pop();
+    }
+  }
+  //출력
+  cout<<result<<endl;
+  return 0;
+}
