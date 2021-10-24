@@ -1,0 +1,85 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+using namespace chrono;
+int n,m;
+vector<pair<int,int>> tree[101];//트리
+vector<int> result;//결과
+int node[101];//진입노드
+int part[101][101];//i를 만들기위한 j의수
+
+//입력
+void input(){
+    cin>>n;
+    cin>>m;
+    //각 노드의 진입노드 초기화
+    for(int i=0;i<=n;i++){
+        node[i] = 0;
+    }
+    //간선 넣기
+    for(int i=1;i<=m;i++){
+        int a,b,d;
+        cin>>a>>b>>d;
+        tree[b].push_back({a,d});//y->x
+        node[a]+=1;//진입노드 추가
+    }
+}
+
+//위상정렬
+void bfs(){
+    queue<int> q;
+    //진입노드가 0인것 모두 큐에 넣기
+    for(int i=1;i<=n;i++){
+        if(node[i]==0){
+            q.push(i);
+            part[i][i] = 1;//dp 초기값
+            //곱해야하므로 곱셉의 항등원인 1로 설정
+            result.push_back(i);//기본 부품
+        }
+    }
+    
+    while(!q.empty()){
+        int x = q.front();//현재위치
+        q.pop();
+        
+        //다음지점 탐색
+        for(int i=0;i<tree[x].size();i++){
+            int next = tree[x][i].first;//다음지점
+            int next_cost = tree[x][i].second;//다음 지점 개수
+            node[next]--;//간선제거
+            
+            //next를 만들기 위해 필요한 총 개수
+            for(int j=1;j<=n;j++){
+                part[next][j] += part[x][j]*next_cost;
+            }
+            
+            if(node[next]==0){//새로운 루트가 생기면
+                q.push(next);
+            }
+        }
+    }
+    //결과
+    for(int i=0;i<result.size();i++){
+        //n을 만들기 위해 필요한 i의 개수
+        cout<<result[i]<<" "<<part[n][result[i]]<<"\n";
+    }
+}
+
+int main(){
+    cin.tie(0);
+    cout.tie(0);
+     
+    input();//입력
+    bfs();//위상정렬
+    return 0;
+}
