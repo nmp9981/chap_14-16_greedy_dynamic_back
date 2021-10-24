@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+
+int n;//칸 수
+int maze[1001];//미로
+int dp[1001];//점프 횟수
+const int inf = 100000;//초기화값, 값이 고정이므로 상수형 
+
+//입력
+void input(){
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        cin>>maze[i];
+    }
+}
+
+//점프하기
+void jump(){
+    //초기화
+    for(int i=0;i<=n;i++){
+        dp[i] = inf;
+    }
+    //점화식
+    dp[1] = 0;//왼쪽 끝
+    for(int i=1;i<=n;i++){//현재 칸 수
+        for(int j=1;j<=maze[i];j++){//이동 가능한 칸수
+            dp[i+j] = min(dp[i+j],dp[i]+1);//횟수 증가 여부
+        }
+    }
+    //맨 마지막칸 도달여부
+    if(dp[n]==inf){//도달 불가
+        cout<<-1;
+    }else{//도달 가능
+        cout<<dp[n];
+    }
+}
+
+int main(){
+    cin.tie(0);
+    cout.tie(0);
+     
+    input();//입력
+    jump();//점프하기
+    return 0;
+}
