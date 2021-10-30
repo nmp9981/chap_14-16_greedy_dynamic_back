@@ -1,0 +1,65 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+int n,m;
+int map[501][501];
+int dp[501][501];//경로의 개수
+int dx[] = {-1,1,0,0};//x축이동
+int dy[] = {0,0,-1,1};//y축이동
+
+//입력
+void input(){
+    cin>>m>>n;
+    for(int i=0;i<m;i++){
+        for(int j=0;j<n;j++){
+            cin>>map[i][j];
+        }
+    }
+    memset(dp,-1,sizeof(dp));//초기화
+}
+
+//dfs
+int dfs(int x,int y){
+    //탐색종료
+    if(x==m-1 && y==n-1){//끝까지 가면
+        return 1;//경로 1개 증가
+    }
+    //이미방문
+    if(dp[x][y]!=-1){
+        return dp[x][y];
+    }
+    dp[x][y] = 0;//경로의 개수가 0임을 표시
+    //4방향 탐색
+    for(int i=0;i<4;i++){
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        //범위내에 들고
+        if(nx>=0 && nx<m && ny>=0 && ny<n){
+            //더 작은수면
+            if(map[nx][ny]<map[x][y]){
+                dp[x][y] += dfs(nx,ny);//갱신
+            }
+        }
+    }
+    return dp[x][y];
+}
+
+int main(){
+    cin.tie(0);
+    cout.tie(0);
+
+    input();//입력
+    cout<<dfs(0,0);//좌표
+    //cout<<dp[n-1][m-1];//출력
+    return 0;
+}
