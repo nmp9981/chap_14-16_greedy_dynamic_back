@@ -1,0 +1,51 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <chrono>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+int n,m;
+const int maxi = 50001;
+int guest[maxi];//손님
+int dp[4][maxi];//i번 열차가 몇번까지 탑승
+int sum[maxi];//누적합
+int result = 0;
+
+//입력
+void input(){
+    cin>>n;//객차의 수
+    //손님의수 입력
+    for(int i=1;i<=n;i++){
+        cin>>guest[i];
+        sum[i]+=sum[i-1]+guest[i];//누적합 구하기
+    }
+    cin>>m;//최대로 끌고갈 수 있는 객차의 수
+    //초기화
+    memset(dp,0,sizeof(dp));
+}
+
+//기차 3대로 운송
+void train(){
+    for(int i=1;i<=3;i++){//객차 번호
+        for(int j=m;j<=n;j++){//i번 열차가 몇번까지 탑승하는가?
+            dp[i][j] = max(dp[i][j-1],dp[i-1][j-m]+sum[j]-sum[j-m]);
+        }
+    }
+    cout<<dp[3][n];
+}
+
+int main(){
+    cin.tie(0);
+    cout.tie(0);
+
+    input();//입력
+    train();//기관차 분리
+    return 0;
+}
