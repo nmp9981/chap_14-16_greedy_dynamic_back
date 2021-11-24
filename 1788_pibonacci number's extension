@@ -1,0 +1,43 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+
+using namespace std;//이름공간 선언
+
+int x;
+const int maxi = 1000001;
+const int mod = 1000000000;
+int dp[maxi] = {0,1,};
+
+void pibo(int n){
+	//점화식
+	for(int i=2;i<=abs(n);i++){
+		dp[i] = (dp[i-1]+dp[i-2])%mod;
+	}
+	//출력
+	if(n<0 && n%2==0){//음수 출력
+		cout<<-1<<"\n";
+		cout<<dp[abs(n)];
+	}else if(n==0){//dp[0] = 0
+		cout<<0<<"\n";
+		cout<<0<<"\n";
+	}else{//양수 출력
+		cout<<1<<"\n";
+		cout<<dp[abs(n)]<<"\n";
+	}
+}
+
+int main(){
+    cin.tie(0);
+    cout.tie(0);
+   	cin>>x;
+    pibo(x);
+    return 0;
+}
