@@ -1,0 +1,57 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+#include <cctype>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <utility>
+#include <set>
+
+using namespace std;//이름공간 선언
+
+int n;
+const int maxi = 21;
+int L[maxi];//잃는 체력
+int J[maxi];//얻는 기쁨
+int dp[maxi][101];//i번째가 체력 j일때 얻는 기쁨
+
+//입력
+void input(){
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        cin>>L[i];
+    }
+    for(int i=1;i<=n;i++){
+        cin>>J[i];
+    }
+}
+
+//최대 기쁨
+void pleasure(){
+    memset(dp,0,sizeof(dp));//초기화
+    //점화식
+    for(int i=1;i<=n;i++){
+        for(int j=0;j<=100;j++){//현재 체력
+            if(L[i]<j){//체력이 충분하다면
+                dp[i][j] = max(dp[i-1][j],dp[i-1][j-L[i]]+J[i]);
+            }else{
+                dp[i][j] = dp[i-1][j];
+            }
+        }
+    }
+    //결과
+    cout<<dp[n][100];
+}
+int main(){
+    //빠른 입출력
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
+
+    input();//입력
+    pleasure();//기쁨
+    return 0;
+}
