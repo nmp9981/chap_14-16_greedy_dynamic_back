@@ -1,0 +1,86 @@
+#include <iostream>
+#include <cstring>
+#include <cmath>
+#include <algorithm>
+#include <vector>
+#include <stack>
+#include <queue>
+#include <deque>
+#include <set>
+#include <map>
+#include <utility>
+
+using namespace std;//이름공간 선언
+
+//구조체
+struct dance{
+    int l,r;//왼발, 오른발
+};
+
+const int maxi = 100001;
+vector<int> A;//수열
+vector<dance> foot;//발의 위치
+int dp[maxi];//점수
+int l,r;
+
+//입력
+void input(){
+    A.push_back(0);
+	while(true){
+	    int x;
+	    cin>>x;//수열 입력
+	    if(x==0){
+	        break;//입력종료
+	    }else{
+	        A.push_back(x);
+	    }
+	}
+}
+
+//점수
+int score(int pre, int post){
+    if(pre==0){//중앙시작
+        return 2;
+    }else if(pre==post){//같으면
+        return 1;
+    }else if(abs(pre-post)==2){//정반대
+        return 4;
+    }
+    return 3;
+} 
+
+//댄스게임
+void play(){
+    //초기값
+    foot.push_back({0,0});
+    foot.push_back({0,A[1]});
+    dp[1] = 2;
+    
+    //점화식
+    for(int i=2;i<A.size();i++){
+        //왼쪽
+        int left = score(foot[i-1].l,A[i]);
+        //오른쪽
+        int right = score(foot[i-1].r,A[i]);
+        
+        //점수
+        if(left<=right){
+            foot.push_back({A[i],foot[i-1].r});
+        }else{
+            foot.push_back({foot[i-1].l,A[i]});
+        }
+        dp[i] = dp[i-1] + min(left,right);
+        cout<<dp[i]<<"\n";
+    }
+    cout<<dp[A.size()-1];//출력
+    
+}
+
+int main(){
+    //빠른 입출력
+    ios::sync_with_stdio(false);
+
+    input();//입력
+    play();//댄스게임
+    return 0;
+}
