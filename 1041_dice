@@ -1,0 +1,82 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+long long n;
+long long p[6];//주사위 눈
+int vertex[8][3] = {//생성 가능 꼭짓점
+    {0,1,2},
+    {1,5,2},
+    {0,4,2},
+    {4,5,2},
+    {0,1,3},
+    {1,5,3},
+    {0,4,3},
+    {4,5,3}
+};
+
+//입력
+void input(){
+    cin>>n;//주사위 개수
+    for(int i=0;i<6;i++){//주사위 원소
+        cin>>p[i];
+    }
+}
+
+//주사위 개수가 1개일때
+void dice_one(){
+    //전체합에서 가장 큰것을 뺌
+    long long maxi = p[0];
+    long long sum = 0;
+    for(int i=0;i<6;i++){
+        sum+=p[i];
+        maxi = max(maxi,p[i]);
+    }
+    cout<<sum-maxi;
+    return;
+}
+
+//주사위 합의 최솟값
+void sum_dice(){
+    //주사위가 1개이면
+    if(n==1){
+        dice_one();
+    }else{//주사위가 2개 이상
+        //1개 면만 보임
+        //가장 작은것
+        long long first = min({p[0],p[1],p[2],p[3],p[4],p[5]});
+        long long up_core = first*(n-2)*(n-2);//위 코어
+        long long down_core = first*(n-1)*(n-2)*4;//아래 코어
+        
+        //2개 면이 보임
+        long long second = p[0]+p[1];
+        for(int i=0;i<6;i++){
+            for(int j=0;j<6;j++){
+                if(i+j==5 || i==j){//반대, 동일한 면
+                    continue;
+                }else{
+                    second = min(second,p[i]+p[j]);
+                }
+            }
+        }
+        long long edge = second*8*(n-2);//모서리
+        long long down_vertex = second*4;//아래 꼭짓점
+        
+        //3개 면이 보임
+        long long third = p[0]+p[1]+p[2];
+        for(int i=0;i<8;i++){//윗 꼭짓점
+            third = min(third,p[vertex[i][0]]+p[vertex[i][1]]+p[vertex[i][2]]);
+        }
+        long long up_vertex = third*4;
+        //총합
+        long long sum = edge+up_vertex+down_vertex+up_core+down_core;
+        cout<<sum;
+    }
+}
+
+int main(){
+    input();//입력
+    sum_dice();//주사위 합의 최솟값
+    return 0;
+}
