@@ -1,0 +1,61 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+using namespace std;
+
+int n;
+const int maxi = 33;
+long long pipe[maxi][maxi];
+long long dp[4][maxi][maxi];//종류, 위치
+//1:가로, 2:세로, 3:대각선
+
+//입력
+void input(){
+    cin>>n;
+    for(int i=1;i<=n;i++){
+        for(int j=1;j<=n;j++){
+            cin>>pipe[i][j];
+        }
+    }
+    memset(dp,0,sizeof(dp));//초기화
+}
+
+//파이프 이동
+void move_pipe(){
+    dp[1][1][2] = 1;//초기값
+    //맨 윗줄
+    for(int j=3;j<=n;j++){
+        if(pipe[1][j]==0){
+            dp[1][1][j] = dp[1][1][j-1];//맨위는 가로만 올 수 있음
+        }
+    }
+    //점화식
+    for(int i=2;i<=n;i++){
+        for(int j=3;j<=n;j++){
+            //가로
+            if(pipe[i][j]==0 && pipe[i][j-1]==0){
+                //이전이 가로+대각선
+                dp[1][i][j] = dp[1][i][j-1]+dp[3][i][j-1];
+            }
+            //세로
+            if(pipe[i][j]==0 && pipe[i-1][j]==0){
+                //이전이 세로+대각선
+                dp[2][i][j] = dp[2][i-1][j]+dp[3][i-1][j];
+            }
+            //대각선
+            if(pipe[i][j]==0 && pipe[i][j-1]==0 && pipe[i-1][j]==0 && pipe[i-1][j-1]==0){
+                //이전이 가로+세로+대각선
+                dp[3][i][j] = dp[1][i-1][j-1]+dp[2][i-1][j-1]+dp[3][i-1][j-1];
+            }
+        }
+    }
+    cout<<dp[1][n][n]+dp[2][n][n]+dp[3][n][n];
+}
+
+int main(){
+    input();//입력
+    move_pipe();//파이프 이동
+    return 0;
+}
