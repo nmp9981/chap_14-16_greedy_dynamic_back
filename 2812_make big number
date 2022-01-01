@@ -1,0 +1,65 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <algorithm>
+#include <cstring>
+#include <stack>
+using namespace std;
+
+int n,k;
+const int maxi = 500001;//입력의 최대 사이즈
+stack<int> s;//스택정의
+int num[maxi];//입력배열
+int pop_cnt = 0;//제거한 숫자의 개수
+vector<int> ans;//정답벡터
+
+//입력
+void input(){
+    cin>>n>>k;
+    for(int i=0;i<n;i++){
+        scanf("%1d",&num[i]);
+    }
+}
+
+//크게 만들기
+void bigger(){
+    s.push(num[0]);//첫숫자 넣기
+    for(int i=1;i<n;i++){
+        while(!s.empty()){//스택이 비지 않는 동안
+            //모두 지웠으면
+            if(pop_cnt==k){
+                break;
+            }
+            //이전숫자가 더 크다면
+            if(s.top()>=num[i]){
+                break;
+            }
+            s.pop();
+            pop_cnt++;
+        }
+        s.push(num[i]);
+    }
+    //숫자를 모두 지우지 못했다면
+    while(pop_cnt<k){
+        s.pop();
+        pop_cnt++;
+    }
+}
+
+//출력하기
+void output(){
+    while(!s.empty()){
+        ans.push_back(s.top());
+        s.pop();
+    }
+    for(int i=ans.size()-1;i>=0;i--){
+        cout<<ans[i];
+    }
+}
+
+int main(){
+    input();//입력
+    bigger();//크게 만들기
+    output();//출력하기
+    return 0;
+}
