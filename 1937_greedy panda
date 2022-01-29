@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+int n,ans;
+const int maxi = 501;
+int forest[maxi][maxi];//숲
+int dp[maxi][maxi];//i,j에서 시작했을때의 결과
+bool visit[maxi][maxi];//방문체크
+//축이동
+int dx[4] = {-1,1,0,0};
+int dy[4] = {0,0,-1,1};
+
+//입력
+void input(){
+    cin>>n;
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cin>>forest[i][j];
+            dp[i][j] = -1;
+        }
+    }
+}
+
+//재귀
+int dfs(int x,int y){
+    //이미 값이 있으면 재방문 금지(dp)
+    if(dp[x][y]!=-1){
+        return dp[x][y];
+    }
+    int max_cnt = 0;
+    //다음지점
+    for(int i=0;i<4;i++){
+        int nx = x + dx[i];
+        int ny = y + dy[i];
+        //범위내에 드는가?
+        if(nx<0 || nx>=n || ny<0 || ny>=n){
+            continue;
+        }
+        //대나무가 더 많이 있다
+        if(forest[nx][ny]>forest[x][y]){
+            max_cnt = max(max_cnt,dfs(nx,ny));//재귀
+        }
+    }
+    return dp[x][y] = max_cnt+1;//가장 깊은곳에서 거슬러 올라감
+}
+
+int main(){
+    input();//입력
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            dp[i][j] = dfs(i,j);
+            ans = max(dp[i][j],ans);
+        }
+    }
+    /*
+    for(int i=0;i<n;i++){
+        for(int j=0;j<n;j++){
+            cout<<dp[i][j]<<" ";
+        }
+        cout<<"\n";
+    }
+    */
+    cout<<ans;
+    return 0;
+}
