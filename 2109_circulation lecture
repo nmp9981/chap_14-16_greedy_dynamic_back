@@ -1,0 +1,46 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+using namespace std;
+
+int n;
+vector<pair<int,int>> school;//기한,가격
+
+//입력
+void input(){
+    cin>>n;
+    for(int i=0;i<n;i++){
+        int p,d;
+        cin>>p>>d;
+        school.push_back({d,p});
+    }
+    sort(school.begin(),school.end());//기한 기준으로 정렬
+}
+
+//순회강연
+void lecture(){
+    int money = 0;
+    int deadline = school[0].first;
+    priority_queue<int,vector<int>, greater<int>> pq;//최소힙
+    for(int i=0;i<n;i++){
+        int date = school[i].first;
+        int pay = school[i].second;
+        
+        pq.push(pay);
+        if(pq.size()>date){//날짜보다 더 많은 강의가 있으면
+            pq.pop();//가장 이득이 적은 강의 제거
+        }
+    }
+    while(!pq.empty()){
+        money+=pq.top();
+        pq.pop();
+    }
+    cout<<money;
+}
+
+int main(){
+    input();//입력
+    lecture();//순회강연
+    return 0;
+}
