@@ -1,0 +1,71 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+int n,m;
+vector<int> posi;//양수
+vector<int> nega;//음수
+
+//입력
+void input(){
+    cin>>n>>m;
+    for(int i=0;i<n;i++){
+        int x;
+        cin>>x;
+        if(x>0){//양수
+            posi.push_back(x);
+        }else{//음수
+            nega.push_back(x);
+        }
+    }
+    sort(posi.begin(),posi.end());//정렬
+    sort(nega.begin(),nega.end());
+}
+
+//도서관
+void library(){
+    int dist = 0;
+    int end_nega = nega.size()-1;
+    int end_posi = posi.size()-1;
+    int ne,po;
+    //예외처리
+    if(end_nega==-1){
+        ne = 0;
+    }else{
+        ne = abs(nega[0]);
+    }
+    if(end_posi==-1){
+        po = 0;
+    }else{
+        po = posi[end_posi];
+    }
+    //절댓값이 더 큰쪽
+    if(ne<po){
+        dist+=po;
+        //양수
+        for(int i=end_posi-m;i>=0;i-=m){
+            dist+=(posi[i]*2);
+        }
+        //음수
+        for(int i=0;i<=end_nega;i+=m){
+            dist+=abs(nega[i]*2);
+        }
+    }else{
+        dist+=ne;
+        //양수
+        for(int i=end_posi;i>=0;i-=m){
+            dist+=(posi[i]*2);
+        }
+        //음수
+        for(int i=m;i<=end_nega;i+=m){
+            dist+=abs(nega[i]*2);
+        }
+    }
+    cout<<dist;
+}
+int main(){
+    input();//입력
+    library();//도서관
+    return 0;
+}
