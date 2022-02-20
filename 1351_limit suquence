@@ -1,0 +1,24 @@
+#include <iostream>
+#include <map>
+using namespace std;
+typedef long long ll;
+
+ll n,p,q;
+map<ll,ll> M;
+
+//풀이
+ll A(ll x){
+	if(x==0) return 1;
+	if(M.count(x)!=0){
+		return M[x];
+	}
+	M[x] = A(x/p)+A(x/q);
+	return M[x];
+}
+
+int main(){
+	cin>>n>>p>>q;
+	M[0] = 1;
+	cout<<A(n);
+	return 0;
+}
