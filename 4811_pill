@@ -1,0 +1,39 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+typedef long long ll;
+
+int n;
+const int maxi = 31;
+ll dp[maxi][maxi];//정상, 반쪽으로 나눠진 개수
+
+//초기값
+void init(){
+    memset(dp,0,sizeof(dp));
+    for(int i=1;i<maxi;i++){ 
+        dp[0][i] = 1;
+    }
+    dp[1][0] = 1;
+}
+
+//점화식
+ll F(int x,int y){
+    //이미 값이 있다면
+    if(dp[x][y]!=0) return dp[x][y];
+    
+    //범위검사
+    if(x<0 || y<0 || x>=maxi || y>=maxi) return 0;
+
+    return dp[x][y] = F(x,y-1) + F(x-1,y+1);
+}
+
+int main(){
+    init();//초기값
+    F(29,1);//점화식
+    while(1){
+        cin>>n;//입력
+        if(n==0) break;
+        cout<<dp[n-1][1]<<"\n";
+    }
+    return 0;
+}
