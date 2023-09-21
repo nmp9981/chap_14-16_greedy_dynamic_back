@@ -1,0 +1,45 @@
+#include <iostream>
+#include <queue>
+using namespace std;
+
+int d,k;
+const int maxi = 31;
+int riceCake[maxi];//떡 개수
+int piboNum[maxi];//피보나치 수
+
+//min
+inline int min(int x, int y) {
+    return x > y ? y : x;
+}
+//입력
+void input() {
+    cin>>d>>k;
+}
+//피보나치 수
+void Pibonacci() {
+    piboNum[0] = 0;
+    piboNum[1] = 1;
+    for (int i = 2; i < maxi; i++) piboNum[i] = piboNum[i - 1] + piboNum[i - 2];
+}
+//떡 주기
+void GiveRiceCake() {
+    Pibonacci();//피보나치 수 구하기
+    
+    //ax+by = k 해 구하기
+    for (int x = 1; x < k; x++) {
+        int by = k - piboNum[d - 2] * x;//by=k-ax
+        //정수해를 구함
+        if (by % piboNum[d - 1] == 0) {
+            cout << x <<"\n" << by / piboNum[d - 1];
+            break;
+        }
+    }
+}
+int main() {
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    input();//입력
+    GiveRiceCake();//떡 주기
+    return 0;
+}
